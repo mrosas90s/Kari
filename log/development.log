@@ -5420,3 +5420,1211 @@ Processing by PhotosController#index as HTML
 Completed 200 OK in 40ms (Views: 33.3ms | ActiveRecord: 4.1ms | Allocations: 11366)
 
 
+  [1m[35m (530.1ms)[0m  [1m[35mCREATE DATABASE "Kari_development" ENCODING = 'unicode'[0m
+  [1m[35m (164.2ms)[0m  [1m[35mCREATE DATABASE "Kari_test" ENCODING = 'unicode'[0m
+  [1m[35m (21.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (16.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(138206649370894860)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20230714044636)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "name" character varying, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714044636"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActiveStorageTables (20230714044653)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (17.2ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "service_name" character varying NOT NULL, "byte_size" bigint NOT NULL, "checksum" character varying, "created_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (11.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_blobs_on_key" ON "active_storage_blobs" ("key")[0m
+  [1m[35m (12.5ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (8.9ms)[0m  [1m[35mCREATE INDEX "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments" ("blob_id")[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_attachments_uniqueness" ON "active_storage_attachments" ("record_type", "record_id", "name", "blob_id")[0m
+  [1m[35m (14.7ms)[0m  [1m[35mCREATE TABLE "active_storage_variant_records" ("id" bigserial primary key, "blob_id" bigint NOT NULL, "variation_digest" character varying NOT NULL, CONSTRAINT "fk_rails_993965df05"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714044653"]]
+  [1m[36mTRANSACTION (4.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePhotos (20230714045737)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (16.2ms)[0m  [1m[35mCREATE TABLE "photos" ("id" bigserial primary key, "caption" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c79d76afc0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE INDEX "index_photos_on_user_id" ON "photos" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714045737"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateComments (20230714045749)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.0ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "content" text, "user_id" bigint NOT NULL, "photo_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_8e6de2dbfc"
+FOREIGN KEY ("photo_id")
+  REFERENCES "photos" ("id")
+)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
+  [1m[35m (11.1ms)[0m  [1m[35mCREATE INDEX "index_comments_on_photo_id" ON "comments" ("photo_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714045749"]]
+  [1m[36mTRANSACTION (4.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsAdminToUsers (20230714050100)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "is_admin" boolean DEFAULT FALSE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714050100"]]
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNameAndProfilePictureToUsers (20230714051957)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "profile_picture" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714051957"]]
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddConfirmedAtToUsers (20230714052903)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "confirmed_at" timestamp(6)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230714052903"]]
+  [1m[36mTRANSACTION (3.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-07-15 01:58:06.543796"], ["updated_at", "2023-07-15 01:58:06.543796"]]
+  [1m[36mTRANSACTION (16.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(138206649370894860)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2023-07-14 21:58:38 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.5ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 13.1ms | Allocations: 2736)
+  Rendered layouts/_navbar.html.erb (Duration: 5.4ms | Allocations: 605)
+  Rendered layout layouts/application.html.erb (Duration: 33.0ms | Allocations: 6463)
+Completed 200 OK in 101ms (Views: 39.6ms | ActiveRecord: 3.6ms | Allocations: 17881)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 21:58:44 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb__2515855798907033323_27100 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 2.5ms | Allocations: 631)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 37.9ms | Allocations: 6353)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 113)
+  Rendered layout layouts/application.html.erb (Duration: 45.0ms | Allocations: 7259)
+Completed 200 OK in 94ms (Views: 48.1ms | ActiveRecord: 7.4ms | Allocations: 16828)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:00:48 -0400
+Processing by Users::RegistrationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"1", "email"=>"1@1.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f5fe78ebf40 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-6430-2y6b38.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007f5fe78e70a8>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"1", "email"=>"1@1.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f5fe78ebf40 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-6430-2y6b38.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "1@1.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (1.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "name", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "is_admin", "profile_picture", "confirmed_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["email", "1@1.com"], ["encrypted_password", "[FILTERED]"], ["name", "1"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2023-07-15 02:00:48.885279"], ["updated_at", "2023-07-15 02:00:48.885279"], ["is_admin", false], ["profile_picture", nil], ["confirmed_at", nil]]
+  [1m[36mActiveStorage::Blob Load (1.8ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Create (1.0ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["key", "qhziwz0vrpbk37d94q54wctct43j"], ["filename", "1200x1200bf-60.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["service_name", "amazon"], ["byte_size", 294075], ["checksum", "yjZhzwVLm7tLUeH0K9VXfw=="], ["created_at", "2023-07-15 02:00:49.063005"]]
+  [1m[36mActiveStorage::Attachment Create (1.3ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "profile_picture"], ["record_type", "User"], ["record_id", 1], ["blob_id", 1], ["created_at", "2023-07-15 02:00:49.080724"]]
+  [1m[36mUser Update (0.7ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1 WHERE "users"."id" = $2[0m  [["updated_at", "2023-07-15 02:00:49.140298"], ["id", 1]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+[36m  S3 Storage (1625.7ms) [0m[32mUploaded file to key: qhziwz0vrpbk37d94q54wctct43j (checksum: yjZhzwVLm7tLUeH0K9VXfw==)[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: a0224cfe-090c-4e46-b59c-573c0acdae6f) to Async(default) with arguments: #<GlobalID:0x00007f5fe7963400 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/1>>
+Redirected to http://localhost:3000/
+Completed 303 See Other in 2360ms (ActiveRecord: 18.9ms | Allocations: 198980)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:00:50 -0400
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f]   [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f] Performing ActiveStorage::AnalyzeJob (Job ID: a0224cfe-090c-4e46-b59c-573c0acdae6f) from Async(default) enqueued at 2023-07-15T02:00:50Z with arguments: #<GlobalID:0x00007f5fe78f07c0 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/1>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f] Skipping image analysis because the ruby-vips gem isn't installed
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f]   [1m[36mTRANSACTION (8.7ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f]   [1m[36mActiveStorage::Blob Update (0.8ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = $1 WHERE "active_storage_blobs"."id" = $2[0m  [["metadata", "{\"identified\":true,\"analyzed\":true}"], ["id", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f]   [1m[36mTRANSACTION (6.0ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [a0224cfe-090c-4e46-b59c-573c0acdae6f] Performed ActiveStorage::AnalyzeJob (Job ID: a0224cfe-090c-4e46-b59c-573c0acdae6f) from Async(default) in 46.71ms
+  [1m[36mPhoto Count (1.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (1.4ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 59.8ms | Allocations: 6671)
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 6.3ms | Allocations: 1085)
+  Rendered layout layouts/application.html.erb (Duration: 69.2ms | Allocations: 8745)
+Completed 200 OK in 71ms (Views: 57.2ms | ActiveRecord: 12.8ms | Allocations: 9078)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:03:23 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 12.4ms | Allocations: 2628)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 45.5ms | Allocations: 11150)
+  Rendered layout layouts/application.html.erb (Duration: 72.3ms | Allocations: 17040)
+Completed 200 OK in 124ms (Views: 69.1ms | ActiveRecord: 11.6ms | Allocations: 27838)
+
+
+Started GET "/users/sign_out" for 127.0.0.1 at 2023-07-14 22:03:29 -0400
+Processing by Users::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 303 See Other in 18ms (ActiveRecord: 0.6ms | Allocations: 3827)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:03:29 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 6.0ms | Allocations: 1159)
+  Rendered layouts/_navbar.html.erb (Duration: 4.7ms | Allocations: 207)
+  Rendered layout layouts/application.html.erb (Duration: 13.7ms | Allocations: 2312)
+Completed 200 OK in 16ms (Views: 13.5ms | ActiveRecord: 1.4ms | Allocations: 2635)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 22:03:32 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb___3862402721777544662_26160 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 4.8ms | Allocations: 636)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 24.9ms | Allocations: 5697)
+  Rendered layouts/_navbar.html.erb (Duration: 0.5ms | Allocations: 113)
+  Rendered layout layouts/application.html.erb (Duration: 28.7ms | Allocations: 6603)
+Completed 200 OK in 35ms (Views: 33.2ms | ActiveRecord: 0.0ms | Allocations: 8195)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:04:02 -0400
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"qq", "email"=>"qq@qq.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f6fe825cf88 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7370-l8yjlb.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007f6fe825b368>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"qq", "email"=>"qq@qq.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f6fe825cf88 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7370-l8yjlb.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+Completed 500 Internal Server Error in 370ms (ActiveRecord: 0.0ms | Allocations: 8269)
+
+
+  
+RuntimeError (Missing service adapter for "S3"):
+  
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:33:in `rescue in resolve'
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:29:in `resolve'
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:17:in `build'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:13:in `block in fetch'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:11:in `fetch'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:11:in `fetch'
+activestorage (7.0.6) lib/active_storage/engine.rb:155:in `block (2 levels) in <class:Engine>'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:95:in `class_eval'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:95:in `block in execute_hook'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:85:in `with_execution_control'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:90:in `execute_hook'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:76:in `block in run_load_hooks'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:75:in `each'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:75:in `run_load_hooks'
+activestorage (7.0.6) app/models/active_storage/blob.rb:410:in `<main>'
+bootsnap (1.16.0) lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
+bootsnap (1.16.0) lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
+zeitwerk (2.6.8) lib/zeitwerk/kernel.rb:30:in `require'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:54:in `find_or_build_blob'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:20:in `blob'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:12:in `initialize'
+activestorage (7.0.6) lib/active_storage/attached/model.rb:65:in `new'
+activestorage (7.0.6) lib/active_storage/attached/model.rb:65:in `profile_picture='
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:49:in `public_send'
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:49:in `_assign_attribute'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:21:in `block in _assign_attributes'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:13:in `each'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:13:in `_assign_attributes'
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:34:in `assign_attributes'
+activerecord (7.0.6) lib/active_record/core.rb:468:in `initialize'
+devise (4.9.2) lib/devise/models/database_authenticatable.rb:45:in `initialize'
+activerecord (7.0.6) lib/active_record/inheritance.rb:75:in `new'
+activerecord (7.0.6) lib/active_record/inheritance.rb:75:in `new'
+devise (4.9.2) lib/devise/models/registerable.rb:22:in `new_with_session'
+devise (4.9.2) app/controllers/devise/registrations_controller.rb:100:in `build_resource'
+devise (4.9.2) app/controllers/devise/registrations_controller.rb:17:in `create'
+actionpack (7.0.6) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (7.0.6) lib/abstract_controller/base.rb:215:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/rendering.rb:165:in `process_action'
+actionpack (7.0.6) lib/abstract_controller/callbacks.rb:234:in `block in process_action'
+activesupport (7.0.6) lib/active_support/callbacks.rb:118:in `block in run_callbacks'
+actiontext (7.0.6) lib/action_text/rendering.rb:20:in `with_renderer'
+actiontext (7.0.6) lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+activesupport (7.0.6) lib/active_support/callbacks.rb:127:in `instance_exec'
+activesupport (7.0.6) lib/active_support/callbacks.rb:127:in `block in run_callbacks'
+activesupport (7.0.6) lib/active_support/callbacks.rb:138:in `run_callbacks'
+actionpack (7.0.6) lib/abstract_controller/callbacks.rb:233:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/rescue.rb:23:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/instrumentation.rb:67:in `block in process_action'
+activesupport (7.0.6) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.6) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.6) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.0.6) lib/action_controller/metal/instrumentation.rb:66:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.0.6) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (7.0.6) lib/abstract_controller/base.rb:151:in `process'
+actionview (7.0.6) lib/action_view/rendering.rb:39:in `process'
+actionpack (7.0.6) lib/action_controller/metal.rb:188:in `dispatch'
+actionpack (7.0.6) lib/action_controller/metal.rb:251:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/mapper.rb:18:in `block in <class:Constraints>'
+actionpack (7.0.6) lib/action_dispatch/routing/mapper.rb:48:in `serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:852:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.7) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.7) lib/rack/etag.rb:27:in `call'
+rack (2.2.7) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.7) lib/rack/head.rb:12:in `call'
+actionpack (7.0.6) lib/action_dispatch/http/permissions_policy.rb:38:in `call'
+actionpack (7.0.6) lib/action_dispatch/http/content_security_policy.rb:36:in `call'
+rack (2.2.7) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.7) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/cookies.rb:704:in `call'
+activerecord (7.0.6) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.6) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+web-console (4.2.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/show_exceptions.rb:29:in `call'
+railties (7.0.6) lib/rails/rack/logger.rb:40:in `call_app'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.7) lib/rack/method_override.rb:24:in `call'
+rack (2.2.7) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.6) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.7) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.6) lib/rails/engine.rb:530:in `call'
+puma (5.6.6) lib/puma/configuration.rb:252:in `call'
+puma (5.6.6) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.6) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.6) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.6) lib/puma/server.rb:443:in `process_client'
+puma (5.6.6) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 22:06:39 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb___3862402721777544662_26160 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 0.4ms | Allocations: 80)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 8.5ms | Allocations: 2224)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 85)
+  Rendered layout layouts/application.html.erb (Duration: 13.0ms | Allocations: 3019)
+Completed 200 OK in 16ms (Views: 14.2ms | ActiveRecord: 0.0ms | Allocations: 3749)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:06:50 -0400
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"qq", "email"=>"qq@qq.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f6fe81a8c40 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7370-9c4xa5.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007f6fe81a5a68>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"qq", "email"=>"qq@qq.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007f6fe81a8c40 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7370-9c4xa5.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+Completed 500 Internal Server Error in 367ms (ActiveRecord: 0.0ms | Allocations: 5385)
+
+
+  
+RuntimeError (Missing service adapter for "S3"):
+  
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:33:in `rescue in resolve'
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:29:in `resolve'
+activestorage (7.0.6) lib/active_storage/service/configurator.rb:17:in `build'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:13:in `block in fetch'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:11:in `fetch'
+activestorage (7.0.6) lib/active_storage/service/registry.rb:11:in `fetch'
+activestorage (7.0.6) lib/active_storage/engine.rb:155:in `block (2 levels) in <class:Engine>'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:95:in `class_eval'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:95:in `block in execute_hook'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:85:in `with_execution_control'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:90:in `execute_hook'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:76:in `block in run_load_hooks'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:75:in `each'
+activesupport (7.0.6) lib/active_support/lazy_load_hooks.rb:75:in `run_load_hooks'
+activestorage (7.0.6) app/models/active_storage/blob.rb:410:in `<main>'
+bootsnap (1.16.0) lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
+bootsnap (1.16.0) lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
+zeitwerk (2.6.8) lib/zeitwerk/kernel.rb:30:in `require'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:54:in `find_or_build_blob'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:20:in `blob'
+activestorage (7.0.6) lib/active_storage/attached/changes/create_one.rb:12:in `initialize'
+activestorage (7.0.6) lib/active_storage/attached/model.rb:65:in `new'
+activestorage (7.0.6) lib/active_storage/attached/model.rb:65:in `profile_picture='
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:49:in `public_send'
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:49:in `_assign_attribute'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:21:in `block in _assign_attributes'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:13:in `each'
+activerecord (7.0.6) lib/active_record/attribute_assignment.rb:13:in `_assign_attributes'
+activemodel (7.0.6) lib/active_model/attribute_assignment.rb:34:in `assign_attributes'
+activerecord (7.0.6) lib/active_record/core.rb:468:in `initialize'
+devise (4.9.2) lib/devise/models/database_authenticatable.rb:45:in `initialize'
+activerecord (7.0.6) lib/active_record/inheritance.rb:75:in `new'
+activerecord (7.0.6) lib/active_record/inheritance.rb:75:in `new'
+devise (4.9.2) lib/devise/models/registerable.rb:22:in `new_with_session'
+devise (4.9.2) app/controllers/devise/registrations_controller.rb:100:in `build_resource'
+devise (4.9.2) app/controllers/devise/registrations_controller.rb:17:in `create'
+actionpack (7.0.6) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (7.0.6) lib/abstract_controller/base.rb:215:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/rendering.rb:165:in `process_action'
+actionpack (7.0.6) lib/abstract_controller/callbacks.rb:234:in `block in process_action'
+activesupport (7.0.6) lib/active_support/callbacks.rb:118:in `block in run_callbacks'
+actiontext (7.0.6) lib/action_text/rendering.rb:20:in `with_renderer'
+actiontext (7.0.6) lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+activesupport (7.0.6) lib/active_support/callbacks.rb:127:in `instance_exec'
+activesupport (7.0.6) lib/active_support/callbacks.rb:127:in `block in run_callbacks'
+activesupport (7.0.6) lib/active_support/callbacks.rb:138:in `run_callbacks'
+actionpack (7.0.6) lib/abstract_controller/callbacks.rb:233:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/rescue.rb:23:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/instrumentation.rb:67:in `block in process_action'
+activesupport (7.0.6) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.6) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.6) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.0.6) lib/action_controller/metal/instrumentation.rb:66:in `process_action'
+actionpack (7.0.6) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.0.6) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (7.0.6) lib/abstract_controller/base.rb:151:in `process'
+actionview (7.0.6) lib/action_view/rendering.rb:39:in `process'
+actionpack (7.0.6) lib/action_controller/metal.rb:188:in `dispatch'
+actionpack (7.0.6) lib/action_controller/metal.rb:251:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/mapper.rb:18:in `block in <class:Constraints>'
+actionpack (7.0.6) lib/action_dispatch/routing/mapper.rb:48:in `serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:852:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.7) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.7) lib/rack/etag.rb:27:in `call'
+rack (2.2.7) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.7) lib/rack/head.rb:12:in `call'
+actionpack (7.0.6) lib/action_dispatch/http/permissions_policy.rb:38:in `call'
+actionpack (7.0.6) lib/action_dispatch/http/content_security_policy.rb:36:in `call'
+rack (2.2.7) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.7) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/cookies.rb:704:in `call'
+activerecord (7.0.6) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.6) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+web-console (4.2.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/show_exceptions.rb:29:in `call'
+railties (7.0.6) lib/rails/rack/logger.rb:40:in `call_app'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.7) lib/rack/method_override.rb:24:in `call'
+rack (2.2.7) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.6) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.7) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.6) lib/rails/engine.rb:530:in `call'
+puma (5.6.6) lib/puma/configuration.rb:252:in `call'
+puma (5.6.6) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.6) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.6) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.6) lib/puma/server.rb:443:in `process_client'
+puma (5.6.6) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:08:53 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.4ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 10.1ms | Allocations: 2628)
+  Rendered layouts/_navbar.html.erb (Duration: 4.3ms | Allocations: 606)
+  Rendered layout layouts/application.html.erb (Duration: 22.8ms | Allocations: 6474)
+Completed 200 OK in 52ms (Views: 23.8ms | ActiveRecord: 3.5ms | Allocations: 17257)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 22:08:55 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb___3455618437297832727_25920 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 3.3ms | Allocations: 636)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 37.6ms | Allocations: 5840)
+  Rendered layouts/_navbar.html.erb (Duration: 0.6ms | Allocations: 113)
+  Rendered layout layouts/application.html.erb (Duration: 43.0ms | Allocations: 6746)
+Completed 200 OK in 139ms (Views: 50.4ms | ActiveRecord: 10.9ms | Allocations: 16063)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:09:16 -0400
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"123", "email"=>"123@123.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fb660b5e4d8 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7823-i18r9g.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007fb660b53a38>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"123", "email"=>"123@123.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fb660b5e4d8 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7823-i18r9g.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "123@123.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (1.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "name", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "is_admin", "profile_picture", "confirmed_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["email", "123@123.com"], ["encrypted_password", "[FILTERED]"], ["name", "123"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2023-07-15 02:09:16.751546"], ["updated_at", "2023-07-15 02:09:16.751546"], ["is_admin", false], ["profile_picture", nil], ["confirmed_at", nil]]
+  [1m[36mActiveStorage::Blob Load (3.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.8ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Create (1.4ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["key", "sjcgp7c4zzsixgjiyrl5i7t0lgxh"], ["filename", "1200x1200bf-60.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["service_name", "local"], ["byte_size", 294075], ["checksum", "yjZhzwVLm7tLUeH0K9VXfw=="], ["created_at", "2023-07-15 02:09:16.800284"]]
+  [1m[36mActiveStorage::Attachment Create (2.1ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "profile_picture"], ["record_type", "User"], ["record_id", 2], ["blob_id", 2], ["created_at", "2023-07-15 02:09:16.804994"]]
+  [1m[36mUser Update (1.3ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1 WHERE "users"."id" = $2[0m  [["updated_at", "2023-07-15 02:09:16.809891"], ["id", 2]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+[36m  Disk Storage (1.3ms) [0m[32mUploaded file to key: sjcgp7c4zzsixgjiyrl5i7t0lgxh (checksum: yjZhzwVLm7tLUeH0K9VXfw==)[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: cd690d37-a5e4-4b21-adc0-4c4f2b6fe901) to Async(default) with arguments: #<GlobalID:0x00007fb643479798 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/2>>
+Redirected to http://localhost:3000/
+Completed 303 See Other in 447ms (ActiveRecord: 31.0ms | Allocations: 44439)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:09:16 -0400
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901]   [1m[36mActiveStorage::Blob Load (1.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901] Performing ActiveStorage::AnalyzeJob (Job ID: cd690d37-a5e4-4b21-adc0-4c4f2b6fe901) from Async(default) enqueued at 2023-07-15T02:09:16Z with arguments: #<GlobalID:0x00007fb643429bd0 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/2>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901] Skipping image analysis because the ruby-vips gem isn't installed
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901]   [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901]   [1m[36mActiveStorage::Blob Update (0.6ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = $1 WHERE "active_storage_blobs"."id" = $2[0m  [["metadata", "{\"identified\":true,\"analyzed\":true}"], ["id", 2]]
+Processing by PhotosController#index as TURBO_STREAM
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901]   [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [cd690d37-a5e4-4b21-adc0-4c4f2b6fe901] Performed ActiveStorage::AnalyzeJob (Job ID: cd690d37-a5e4-4b21-adc0-4c4f2b6fe901) from Async(default) in 23.98ms
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.5ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 4.9ms | Allocations: 1104)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 4.2ms | Allocations: 1052)
+  Rendered layout layouts/application.html.erb (Duration: 12.2ms | Allocations: 3181)
+Completed 200 OK in 16ms (Views: 11.5ms | ActiveRecord: 1.3ms | Allocations: 4314)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:09:33 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.9ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 6.8ms | Allocations: 1094)
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 5.5ms | Allocations: 839)
+  Rendered layout layouts/application.html.erb (Duration: 16.5ms | Allocations: 2781)
+Completed 200 OK in 18ms (Views: 14.4ms | ActiveRecord: 2.8ms | Allocations: 3066)
+
+
+Started GET "/users/sign_out" for 127.0.0.1 at 2023-07-14 22:34:22 -0400
+Processing by Users::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 303 See Other in 60ms (ActiveRecord: 10.3ms | Allocations: 6194)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:34:22 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (1.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 25.4ms | Allocations: 1159)
+  Rendered layouts/_navbar.html.erb (Duration: 0.5ms | Allocations: 129)
+  Rendered layout layouts/application.html.erb (Duration: 29.3ms | Allocations: 2253)
+Completed 200 OK in 31ms (Views: 28.5ms | ActiveRecord: 1.7ms | Allocations: 2578)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 22:34:23 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb___3455618437297832727_25920 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 0.6ms | Allocations: 80)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 5.6ms | Allocations: 2155)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 78)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | Allocations: 2907)
+Completed 200 OK in 12ms (Views: 10.5ms | ActiveRecord: 0.0ms | Allocations: 3510)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:34:50 -0400
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"kari", "email"=>"kari@kari.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fb660c03140 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7823-rl9nqw.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007fb660be75a8>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"kari", "email"=>"kari@kari.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fb660c03140 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-7823-rl9nqw.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "kari@kari.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (1.9ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "name", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "is_admin", "profile_picture", "confirmed_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["email", "kari@kari.com"], ["encrypted_password", "[FILTERED]"], ["name", "kari"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2023-07-15 02:34:51.051064"], ["updated_at", "2023-07-15 02:34:51.051064"], ["is_admin", false], ["profile_picture", nil], ["confirmed_at", nil]]
+  [1m[36mActiveStorage::Blob Load (2.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Create (1.4ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["key", "hgnq23wbm5maurhlm4yilihsy7o5"], ["filename", "1200x1200bf-60.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["service_name", "local"], ["byte_size", 294075], ["checksum", "yjZhzwVLm7tLUeH0K9VXfw=="], ["created_at", "2023-07-15 02:34:51.073351"]]
+  [1m[36mActiveStorage::Attachment Create (1.1ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "profile_picture"], ["record_type", "User"], ["record_id", 3], ["blob_id", 3], ["created_at", "2023-07-15 02:34:51.084732"]]
+  [1m[36mUser Update (1.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1 WHERE "users"."id" = $2[0m  [["updated_at", "2023-07-15 02:34:51.090031"], ["id", 3]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+[36m  Disk Storage (1.8ms) [0m[32mUploaded file to key: hgnq23wbm5maurhlm4yilihsy7o5 (checksum: yjZhzwVLm7tLUeH0K9VXfw==)[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: 67ad11a3-9269-4806-9b84-5c232e0108b2) to Async(default) with arguments: #<GlobalID:0x00007fb660a30908 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/3>>
+Redirected to http://localhost:3000/
+Completed 303 See Other in 396ms (ActiveRecord: 11.7ms | Allocations: 15877)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:34:51 -0400
+Processing by PhotosController#index as TURBO_STREAM
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.5ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 4.8ms | Allocations: 1087)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 5.7ms | Allocations: 998)
+  Rendered layout layouts/application.html.erb (Duration: 13.6ms | Allocations: 3007)
+Completed 200 OK in 16ms (Views: 13.1ms | ActiveRecord: 1.8ms | Allocations: 3313)
+
+
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2]   [1m[36mActiveStorage::Blob Load (1.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2] Performing ActiveStorage::AnalyzeJob (Job ID: 67ad11a3-9269-4806-9b84-5c232e0108b2) from Async(default) enqueued at 2023-07-15T02:34:51Z with arguments: #<GlobalID:0x00007fb643540b18 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/3>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2] Skipping image analysis because the ruby-vips gem isn't installed
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2]   [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2]   [1m[36mActiveStorage::Blob Update (0.6ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = $1 WHERE "active_storage_blobs"."id" = $2[0m  [["metadata", "{\"identified\":true,\"analyzed\":true}"], ["id", 3]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2]   [1m[36mTRANSACTION (3.5ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [67ad11a3-9269-4806-9b84-5c232e0108b2] Performed ActiveStorage::AnalyzeJob (Job ID: 67ad11a3-9269-4806-9b84-5c232e0108b2) from Async(default) in 85.0ms
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "kari@kari.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (1.0ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "is_admin" = $2 WHERE "users"."id" = $3[0m  [["updated_at", "2023-07-15 02:36:03.868725"], ["is_admin", true], ["id", 3]]
+  [1m[36mTRANSACTION (4.3ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:36:19 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.4ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  Rendered photos/index.html.erb within layouts/application (Duration: 11.2ms | Allocations: 2628)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 44.4ms | Allocations: 11163)
+  Rendered layout layouts/application.html.erb (Duration: 67.7ms | Allocations: 17065)
+Completed 200 OK in 119ms (Views: 65.3ms | ActiveRecord: 11.7ms | Allocations: 27863)
+
+
+Started GET "/photos/new" for 127.0.0.1 at 2023-07-14 22:36:22 -0400
+Processing by PhotosController#new as HTML
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering photos/new.html.erb within layouts/application
+  Rendered photos/_form.html.erb (Duration: 11.9ms | Allocations: 2656)
+  Rendered photos/new.html.erb within layouts/application (Duration: 13.3ms | Allocations: 2998)
+  Rendered layouts/_navbar.html.erb (Duration: 0.3ms | Allocations: 61)
+  Rendered layout layouts/application.html.erb (Duration: 16.0ms | Allocations: 3800)
+Completed 200 OK in 78ms (Views: 16.9ms | ActiveRecord: 4.9ms | Allocations: 8018)
+
+
+Started POST "/photos" for 127.0.0.1 at 2023-07-14 22:36:33 -0400
+Processing by PhotosController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "photo"=>{"caption"=>"mi vida", "user_id"=>"1", "image"=>#<ActionDispatch::Http::UploadedFile:0x00007fd09b312040 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-9196-zfn4dh.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"photo[image]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">}, "commit"=>"Create"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mPhoto Create (1.5ms)[0m  [1m[32mINSERT INTO "photos" ("caption", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["caption", "mi vida"], ["user_id", 1], ["created_at", "2023-07-15 02:36:33.855782"], ["updated_at", "2023-07-15 02:36:33.855782"]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mActiveStorage::Blob Load (0.8ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mActiveStorage::Attachment Load (0.7ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mActiveStorage::Blob Create (1.5ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["key", "f0c9f3for13nihczafqmah073c2e"], ["filename", "1200x1200bf-60.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["service_name", "local"], ["byte_size", 294075], ["checksum", "yjZhzwVLm7tLUeH0K9VXfw=="], ["created_at", "2023-07-15 02:36:33.910719"]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mActiveStorage::Attachment Create (0.9ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "image"], ["record_type", "Photo"], ["record_id", 1], ["blob_id", 4], ["created_at", "2023-07-15 02:36:33.916795"]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mPhoto Update (0.8ms)[0m  [1m[33mUPDATE "photos" SET "updated_at" = $1 WHERE "photos"."id" = $2[0m  [["updated_at", "2023-07-15 02:36:33.921264"], ["id", 1]]
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/photos_controller.rb:29:in `create'
+[36m  Disk Storage (1.8ms) [0m[32mUploaded file to key: f0c9f3for13nihczafqmah073c2e (checksum: yjZhzwVLm7tLUeH0K9VXfw==)[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: 9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3) to Async(default) with arguments: #<GlobalID:0x00007fd099c239b0 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/4>>
+Redirected to http://localhost:3000/photos/1
+Completed 302 Found in 165ms (ActiveRecord: 19.0ms | Allocations: 37619)
+
+
+Started GET "/photos/1" for 127.0.0.1 at 2023-07-14 22:36:33 -0400
+Processing by PhotosController#show as TURBO_STREAM
+  Parameters: {"id"=>"1"}
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3]   [1m[36mActiveStorage::Blob Load (0.9ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3] Performing ActiveStorage::AnalyzeJob (Job ID: 9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3) from Async(default) enqueued at 2023-07-15T02:36:33Z with arguments: #<GlobalID:0x00007fd099bc0b30 @uri=#<URI::GID gid://kari/ActiveStorage::Blob/4>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3] Skipping image analysis because the ruby-vips gem isn't installed
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3]   [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3]   [1m[36mActiveStorage::Blob Update (0.6ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = $1 WHERE "active_storage_blobs"."id" = $2[0m  [["metadata", "{\"identified\":true,\"analyzed\":true}"], ["id", 4]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3]   [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3] Performed ActiveStorage::AnalyzeJob (Job ID: 9101c9d0-0bb6-4bc0-ae89-659eabf6d4a3) from Async(default) in 34.8ms
+  [1m[36mPhoto Load (0.7ms)[0m  [1m[34mSELECT "photos".* FROM "photos" WHERE "photos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:62:in `set_photo'
+  Rendering layout layouts/application.html.erb
+  Rendering photos/show.html.erb within layouts/application
+  [1m[36mComment Load (0.8ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/show.html.erb:2
+  Rendered photos/show.html.erb within layouts/application (Duration: 28.2ms | Allocations: 5522)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 5.0ms | Allocations: 919)
+  Rendered layout layouts/application.html.erb (Duration: 36.3ms | Allocations: 7483)
+Completed 200 OK in 101ms (Views: 31.1ms | ActiveRecord: 16.8ms | Allocations: 16907)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:36:35 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (2.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (1.1ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (0.9ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (0.7ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  Rendered photos/index.html.erb within layouts/application (Duration: 46.4ms | Allocations: 8556)
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 4.4ms | Allocations: 1008)
+  Rendered layout layouts/application.html.erb (Duration: 53.4ms | Allocations: 10318)
+Completed 200 OK in 56ms (Views: 44.8ms | ActiveRecord: 9.7ms | Allocations: 10656)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c3d3a6dda831727847100a016dc8f14b697cde9c/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:36:35 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--c3d3a6dda831727847100a016dc8f14b697cde9c", "filename"=>"1200x1200bf-60"}
+  [1m[36mActiveStorage::Blob Load (0.7ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+[36m  Disk Storage (1.1ms) [0m[34mGenerated URL for file at key: f0c9f3for13nihczafqmah073c2e (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhaakJqT1dZelptOXlNVE51YVdoamVtRm1jVzFoYURBM00yTXlaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjM1LjkzM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--8527d61d99c2110c0301db8b934ad1ef1f5fac6b/1200x1200bf-60.jpg)[0m
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhaakJqT1dZelptOXlNVE51YVdoamVtRm1jVzFoYURBM00yTXlaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjM1LjkzM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--8527d61d99c2110c0301db8b934ad1ef1f5fac6b/1200x1200bf-60.jpg
+Completed 302 Found in 10ms (ActiveRecord: 0.7ms | Allocations: 2781)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhaakJqT1dZelptOXlNVE51YVdoamVtRm1jVzFoYURBM00yTXlaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjM1LjkzM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--8527d61d99c2110c0301db8b934ad1ef1f5fac6b/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:36:35 -0400
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"1200x1200bf-60"}
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms | Allocations: 323)
+
+
+Started POST "/photos/1/comments" for 127.0.0.1 at 2023-07-14 22:36:43 -0400
+Processing by CommentsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "comment"=>{"photo_id"=>"1", "content"=>"hola kamila"}, "commit"=>"Comentar", "photo_id"=>"1"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos" WHERE "photos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/comments_controller.rb:25:in `create'
+[31mUnpermitted parameter: :photo_id. Context: { controller: CommentsController, action: create, request: #<ActionDispatch::Request:0x00007fd09cdaf808>, params: {"authenticity_token"=>"[FILTERED]", "comment"=>{"photo_id"=>"1", "content"=>"hola kamila"}, "commit"=>"Comentar", "controller"=>"comments", "action"=>"create", "photo_id"=>"1"} }[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+  [1m[36mComment Create (1.7ms)[0m  [1m[32mINSERT INTO "comments" ("content", "user_id", "photo_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "hola kamila"], ["user_id", 3], ["photo_id", 1], ["created_at", "2023-07-15 02:36:43.435916"], ["updated_at", "2023-07-15 02:36:43.435916"]]
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+  [1m[36mTRANSACTION (4.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+Redirected to http://localhost:3000/photos/1
+Completed 302 Found in 30ms (ActiveRecord: 8.9ms | Allocations: 5789)
+
+
+Started GET "/photos/1" for 127.0.0.1 at 2023-07-14 22:36:43 -0400
+Processing by PhotosController#show as TURBO_STREAM
+  Parameters: {"id"=>"1"}
+  [1m[36mPhoto Load (0.7ms)[0m  [1m[34mSELECT "photos".* FROM "photos" WHERE "photos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:62:in `set_photo'
+  Rendering layout layouts/application.html.erb
+  Rendering photos/show.html.erb within layouts/application
+  [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/show.html.erb:2
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Blob Load (0.7ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  Rendered photos/show.html.erb within layouts/application (Duration: 15.3ms | Allocations: 4625)
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 3.8ms | Allocations: 842)
+  Rendered layout layouts/application.html.erb (Duration: 22.1ms | Allocations: 6365)
+Completed 200 OK in 26ms (Views: 20.2ms | ActiveRecord: 3.3ms | Allocations: 7177)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b1ba51a22d4c14621499f6786649114776121834/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:36:43 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b1ba51a22d4c14621499f6786649114776121834", "filename"=>"1200x1200bf-60"}
+  [1m[36mActiveStorage::Blob Load (0.8ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[36m  Disk Storage (0.9ms) [0m[34mGenerated URL for file at key: hgnq23wbm5maurhlm4yilihsy7o5 (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2R1Y1RJemQySnROVzFoZFhKb2JHMDBlV2xzYVdoemVUZHZOUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjQzLjU1OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--7b2efb0c7af248ead20fe50e21e6e684d48ceab7/1200x1200bf-60.jpg)[0m
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2R1Y1RJemQySnROVzFoZFhKb2JHMDBlV2xzYVdoemVUZHZOUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjQzLjU1OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--7b2efb0c7af248ead20fe50e21e6e684d48ceab7/1200x1200bf-60.jpg
+Completed 302 Found in 9ms (ActiveRecord: 0.8ms | Allocations: 1383)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2R1Y1RJemQySnROVzFoZFhKb2JHMDBlV2xzYVdoemVUZHZOUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQxOjQzLjU1OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--7b2efb0c7af248ead20fe50e21e6e684d48ceab7/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:36:43 -0400
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"1200x1200bf-60"}
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms | Allocations: 179)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:36:48 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (1.0ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (4.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (0.7ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (2.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  Rendered photos/index.html.erb within layouts/application (Duration: 37.5ms | Allocations: 7014)
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 3.8ms | Allocations: 839)
+  Rendered layout layouts/application.html.erb (Duration: 43.2ms | Allocations: 8535)
+Completed 200 OK in 45ms (Views: 31.5ms | ActiveRecord: 12.6ms | Allocations: 8812)
+
+
+Started GET "/users/sign_out" for 127.0.0.1 at 2023-07-14 22:37:14 -0400
+Processing by Users::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 303 See Other in 15ms (ActiveRecord: 0.6ms | Allocations: 3372)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:37:14 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (1.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (1.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.9ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  Rendered photos/index.html.erb within layouts/application (Duration: 36.2ms | Allocations: 7228)
+  Rendered layouts/_navbar.html.erb (Duration: 4.0ms | Allocations: 196)
+  Rendered layout layouts/application.html.erb (Duration: 43.5ms | Allocations: 8144)
+Completed 200 OK in 45ms (Views: 37.9ms | ActiveRecord: 6.4ms | Allocations: 8467)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2023-07-14 22:37:15 -0400
+Processing by Users::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/sessions/new.html.erb within layouts/application
+  Rendered users/shared/_links.html.erb (Duration: 2.4ms | Allocations: 730)
+  Rendered users/sessions/new.html.erb within layouts/application (Duration: 25.0ms | Allocations: 5766)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 113)
+  Rendered layout layouts/application.html.erb (Duration: 28.3ms | Allocations: 6671)
+Completed 200 OK in 38ms (Views: 35.6ms | ActiveRecord: 0.0ms | Allocations: 7998)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2023-07-14 22:37:17 -0400
+Processing by Users::SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"qq@qq.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "qq@qq.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 15ms (ActiveRecord: 0.5ms | Allocations: 2004)
+
+
+Processing by Users::SessionsController#new as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"qq@qq.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendering layout layouts/application.html.erb
+  Rendering users/sessions/new.html.erb within layouts/application
+  Rendered users/shared/_links.html.erb (Duration: 0.3ms | Allocations: 133)
+  Rendered users/sessions/new.html.erb within layouts/application (Duration: 4.0ms | Allocations: 1327)
+  Rendered layouts/_navbar.html.erb (Duration: 0.3ms | Allocations: 55)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | Allocations: 2084)
+Completed 200 OK in 321ms (Views: 7.0ms | ActiveRecord: 0.0ms | Allocations: 3562)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2023-07-14 22:37:24 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb__2276994194607828010_27520 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered users/shared/_links.html.erb (Duration: 1.2ms | Allocations: 154)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 20.8ms | Allocations: 3052)
+  Rendered layouts/_navbar.html.erb (Duration: 0.5ms | Allocations: 112)
+  Rendered layout layouts/application.html.erb (Duration: 23.9ms | Allocations: 3956)
+Completed 200 OK in 29ms (Views: 26.7ms | ActiveRecord: 0.0ms | Allocations: 5403)
+
+
+Started POST "/users" for 127.0.0.1 at 2023-07-14 22:37:45 -0400
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"123", "email"=>"123@123.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fd09bc6fb38 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-9196-y8js20.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up"}
+[31mUnpermitted parameter: :is_admin. Context: { controller: Users::RegistrationsController, action: create, request: #<ActionDispatch::Request:0x00007fd09bc4d718>, params: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"123", "email"=>"123@123.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "profile_picture"=>#<ActionDispatch::Http::UploadedFile:0x00007fd09bc6fb38 @tempfile=#<Tempfile:/tmp/RackMultipart20230714-9196-y8js20.jpg>, @content_type="image/jpeg", @original_filename="1200x1200bf-60.jpg", @headers="Content-Disposition: form-data; name=\"user[profile_picture]\"; filename=\"1200x1200bf-60.jpg\"\r\nContent-Type: image/jpeg\r\n">, "is_admin"=>"0"}, "commit"=>"Sign up", "controller"=>"users/registrations", "action"=>"create"} }[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "123@123.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  Rendering layout layouts/application.html.erb
+  Rendering users/registrations/new.html.erb within layouts/application
+DEPRECATION WARNING: [Devise] `DeviseHelper#devise_error_messages!` is deprecated and will be
+removed in the next major version.
+
+Devise now uses a partial under "devise/shared/error_messages" to display
+error messages by default, and make them easier to customize. Update your
+views changing calls from:
+
+    <%= devise_error_messages! %>
+
+to:
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+To start customizing how errors are displayed, you can copy the partial
+from devise to your `app/views` folder. Alternatively, you can run
+`rails g devise:views` which will copy all of them again to your app.
+ (called from block in _app_views_users_registrations_new_html_erb__2276994194607828010_27520 at /home/sherpa90/Documents/Kari/app/views/users/registrations/new.html.erb:2)
+  Rendered devise/shared/_error_messages.html.erb (Duration: 3.5ms | Allocations: 768)
+  Rendered users/shared/_links.html.erb (Duration: 0.3ms | Allocations: 79)
+  Rendered users/registrations/new.html.erb within layouts/application (Duration: 11.8ms | Allocations: 3626)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 94)
+  Rendered layout layouts/application.html.erb (Duration: 14.6ms | Allocations: 4436)
+Completed 422 Unprocessable Entity in 363ms (Views: 15.6ms | ActiveRecord: 1.5ms | Allocations: 11502)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2023-07-14 22:38:07 -0400
+Processing by Users::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/sessions/new.html.erb within layouts/application
+  Rendered users/shared/_links.html.erb (Duration: 0.5ms | Allocations: 131)
+  Rendered users/sessions/new.html.erb within layouts/application (Duration: 4.1ms | Allocations: 1205)
+  Rendered layouts/_navbar.html.erb (Duration: 0.4ms | Allocations: 78)
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | Allocations: 1957)
+Completed 200 OK in 10ms (Views: 8.5ms | ActiveRecord: 0.0ms | Allocations: 2682)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2023-07-14 22:38:15 -0400
+Processing by Users::SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"123@123.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "123@123.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 303 See Other in 323ms (ActiveRecord: 0.6ms | Allocations: 2777)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:38:16 -0400
+Processing by PhotosController#index as TURBO_STREAM
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.8ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  Rendered photos/index.html.erb within layouts/application (Duration: 29.2ms | Allocations: 7015)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 3.4ms | Allocations: 831)
+  Rendered layout layouts/application.html.erb (Duration: 35.3ms | Allocations: 8533)
+Completed 200 OK in 37ms (Views: 31.7ms | ActiveRecord: 4.4ms | Allocations: 8814)
+
+
+Started POST "/photos/1/comments" for 127.0.0.1 at 2023-07-14 22:38:23 -0400
+Processing by CommentsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "comment"=>{"photo_id"=>"1", "content"=>"hola"}, "commit"=>"Comentar", "photo_id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPhoto Load (0.6ms)[0m  [1m[34mSELECT "photos".* FROM "photos" WHERE "photos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/comments_controller.rb:25:in `create'
+[31mUnpermitted parameter: :photo_id. Context: { controller: CommentsController, action: create, request: #<ActionDispatch::Request:0x00007fd099bf1910>, params: {"authenticity_token"=>"[FILTERED]", "comment"=>{"photo_id"=>"1", "content"=>"hola"}, "commit"=>"Comentar", "controller"=>"comments", "action"=>"create", "photo_id"=>"1"} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+  [1m[36mComment Create (0.9ms)[0m  [1m[32mINSERT INTO "comments" ("content", "user_id", "photo_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["content", "hola"], ["user_id", 2], ["photo_id", 1], ["created_at", "2023-07-15 02:38:23.537246"], ["updated_at", "2023-07-15 02:38:23.537246"]]
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/comments_controller.rb:29:in `create'
+Redirected to http://localhost:3000/photos/1
+Completed 302 Found in 22ms (ActiveRecord: 3.7ms | Allocations: 4231)
+
+
+Started GET "/photos/1" for 127.0.0.1 at 2023-07-14 22:38:23 -0400
+Processing by PhotosController#show as TURBO_STREAM
+  Parameters: {"id"=>"1"}
+  [1m[36mPhoto Load (0.5ms)[0m  [1m[34mSELECT "photos".* FROM "photos" WHERE "photos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/photos_controller.rb:62:in `set_photo'
+  Rendering layout layouts/application.html.erb
+  Rendering photos/show.html.erb within layouts/application
+  [1m[36mComment Load (1.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/show.html.erb:2
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/show.html.erb:4
+  Rendered photos/show.html.erb within layouts/application (Duration: 30.6ms | Allocations: 5760)
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 3.6ms | Allocations: 829)
+  Rendered layout layouts/application.html.erb (Duration: 37.0ms | Allocations: 7481)
+Completed 200 OK in 43ms (Views: 32.7ms | ActiveRecord: 5.7ms | Allocations: 8251)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b0dbea3a43f7062e4e56d08b06909c84f5c5a9d4/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:38:23 -0400
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b0dbea3a43f7062e4e56d08b06909c84f5c5a9d4", "filename"=>"1200x1200bf-60"}
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[36m  Disk Storage (0.9ms) [0m[34mGenerated URL for file at key: sjcgp7c4zzsixgjiyrl5i7t0lgxh (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhjMnBqWjNBM1l6UjZlbk5wZUdkcWFYbHliRFZwTjNRd2JHZDRhQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQzOjIzLjY3N1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--9eaa8021207ac47281da972dbb22efb37692c2ba/1200x1200bf-60.jpg)[0m
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhjMnBqWjNBM1l6UjZlbk5wZUdkcWFYbHliRFZwTjNRd2JHZDRhQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQzOjIzLjY3N1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--9eaa8021207ac47281da972dbb22efb37692c2ba/1200x1200bf-60.jpg
+Completed 302 Found in 7ms (ActiveRecord: 0.4ms | Allocations: 1382)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhjMnBqWjNBM1l6UjZlbk5wZUdkcWFYbHliRFZwTjNRd2JHZDRhQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpVDJsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWpFeU1EQjRNVEl3TUdKbUxUWXdMbXB3WnlJN0lHWnBiR1Z1WVcxbEtqMVZWRVl0T0Njbk1USXdNSGd4TWpBd1ltWXROakF1YW5CbkJqc0dWRG9SWTI5dWRHVnVkRjkwZVhCbFNTSVBhVzFoWjJVdmFuQmxad1k3QmxRNkVYTmxjblpwWTJWZmJtRnRaVG9LYkc5allXdz0iLCJleHAiOiIyMDIzLTA3LTE1VDAyOjQzOjIzLjY3N1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--9eaa8021207ac47281da972dbb22efb37692c2ba/1200x1200bf-60.jpg" for 127.0.0.1 at 2023-07-14 22:38:23 -0400
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"1200x1200bf-60"}
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms | Allocations: 179)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:38:25 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.4ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (1.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  Rendered photos/index.html.erb within layouts/application (Duration: 42.1ms | Allocations: 9489)
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/layouts/_navbar.html.erb:9
+  Rendered layouts/_navbar.html.erb (Duration: 12.6ms | Allocations: 829)
+  Rendered layout layouts/application.html.erb (Duration: 56.9ms | Allocations: 11000)
+Completed 200 OK in 59ms (Views: 52.4ms | ActiveRecord: 6.3ms | Allocations: 11277)
+
+
+Started GET "/users/sign_out" for 127.0.0.1 at 2023-07-14 22:38:28 -0400
+Processing by Users::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 303 See Other in 13ms (ActiveRecord: 0.5ms | Allocations: 1777)
+
+
+Started GET "/" for 127.0.0.1 at 2023-07-14 22:38:28 -0400
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mPhoto Load (0.9ms)[0m  [1m[34mSELECT "photos".* FROM "photos"[0m
+  ↳ app/views/photos/index.html.erb:5:in `each_slice'
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "Photo"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:10
+  [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."photo_id" = $1[0m  [["photo_id", 1]]
+  ↳ app/views/photos/index.html.erb:14
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 2], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:16
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/photos/index.html.erb:17
+  Rendered photos/index.html.erb within layouts/application (Duration: 43.1ms | Allocations: 9497)
+  Rendered layouts/_navbar.html.erb (Duration: 0.3ms | Allocations: 103)
+  Rendered layout layouts/application.html.erb (Duration: 45.6ms | Allocations: 10284)
+Completed 200 OK in 48ms (Views: 40.6ms | ActiveRecord: 6.1ms | Allocations: 10561)
+
+
